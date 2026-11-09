@@ -1,6 +1,6 @@
 # 동네성적표(townreport) 매일 제작 가이드
 
-인스타 계정 동네성적표(@townreport): 서울·경기 행정동 하나를 골라 교통·학군·생활·자연·개발 5과목 성적표를 사진 8장 캐러셀로 만든다.
+인스타 계정 동네성적표(@townreport): 서울·경기 행정동 하나를 골라 교통·학군·생활·자연·개발 5과목 성적표를 8장으로 만들어 음악을 입힌 릴스로 올린다.
 
 ## 준비
 1. 이 저장소의 `townreport/tools/*` 를 `/home/claude/dongne/` 에 복사하고 `mkdir -p /home/claude/dongne/{data,build,out,episodes}`.
@@ -26,15 +26,16 @@
 - `cd /home/claude/dongne && python3 carousel.py episodes/epNN_이름.json out/epNN` → 01~08.jpg (1080x1350).
 - 8장을 축소 합본으로 만들어 직접 보고 글자 넘침, 지도 경계 잘림, 핀 위치를 확인하고 고친다.
 
-## 형식
-사진 캐러셀로만 올린다. 사용자가 2026-11-09 에 릴스(음악 영상)는 하지 말자고 정했다.
+## 형식: 릴스 (음악)
+사용자가 2026-11-09 저녁에, 팔로워가 적은 초기에 노출이 더 나오는 릴스로 바꾸기로 했다(2026-11-10 부터, 점심 a·저녁 b 모두). 이전의 "사진 캐러셀만" 결정을 대체한다.
+8장을 렌더링한 뒤 `cd /home/claude/dongne && python3 slideshow.py out/epNN out/epNN_reel.mp4 <EP 번호>` 로 1080x1920 슬라이드 영상(약 27초)을 만든다. bgm.py 오리지널 배경음악이 들어가며 시드(EP 번호)마다 조성, 빠르기, 코드, 멜로디가 달라진다. 유행곡·기존 노래는 저작권 때문에 넣지 않는다.
 
 ## 캡션
 `tools/episodes/ep01_gongdeok_caption.txt` 형식. 해시태그 8개: #동네이름 #구/시 #동네성적표 #입지분석 + 그 동네에 맞는 4개(편마다 다르게). 끝에 "※ 공개 자료 기반 정보 제공 목적이며 투자 권유가 아닙니다." 와 "※ 지도 © OpenStreetMap contributors" 를 넣는다. 2,200자 이하.
 
 ## 대기열 (하루 2편)
 사용자가 2026-11-09 에 트래픽 많은 시간대에 하루 두 번 올리기로 정했다. 매일 2편을 만들어 점심(a)과 저녁(b) 슬롯에 넣는다. 두 편은 서울 1편 + 경기 1편처럼 지역을 섞는다.
-- `townreport/queue/<YYYY-MM-DD>/a/` 와 `/b/` 에 각각 `01.jpg ~ 08.jpg`, `caption.txt`, `meta.json` ({"ep":N,"adm_nm":"...","title":"...","posted":false,"media_id":null}).
+- `townreport/queue/<YYYY-MM-DD>/a/` 와 `/b/` 에 각각 `01.jpg ~ 08.jpg`, `reel.mp4`, `caption.txt`, `meta.json` ({"ep":N,"adm_nm":"...","title":"...","posted":false,"media_id":null}).
 - EP 번호는 used.txt 줄 수 + 1 부터 차례로(a 가 먼저). EP 번호는 used.txt 의 가장 큰 번호 다음으로 한다.
 - 에피소드 json 과 캡션을 `townreport/tools/episodes/` 에도 보관하고, used.txt 에 `EP.NN <adm_nm> <날짜>` 를 추가한다.
 - 7일보다 오래된 queue 날짜 폴더는 git rm 한다. 저장소의 다른 폴더(videos/ 등 미스테리툰 파일)는 건드리지 않는다.
