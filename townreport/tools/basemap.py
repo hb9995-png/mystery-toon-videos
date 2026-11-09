@@ -17,7 +17,7 @@ def build(adm_nm, out_prefix, W=1080, H=1240, pad=0.06):
     g=f['geometry']; polys=g['coordinates'] if g['type']=='MultiPolygon' else [g['coordinates']]
     pts=[p for poly in polys for ring in poly for p in ring]
     lons=[p[0] for p in pts]; lats=[p[1] for p in pts]
-    for z in range(17,11,-1):
+    for z in range(int(os.environ.get("ZMAX","17")),11,-1):
         x0,y1=ll2px(min(lons),min(lats),z); x1,y0=ll2px(max(lons),max(lats),z)
         if (x1-x0)<=W*(1-2*pad) and (y1-y0)<=H*(1-2*pad): break
     cx,cy=(x0+x1)/2,(y0+y1)/2; L,T=cx-W/2,cy-H/2
