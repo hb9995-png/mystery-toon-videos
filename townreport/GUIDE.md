@@ -26,10 +26,14 @@
 - `cd /home/claude/dongne && python3 carousel.py episodes/epNN_이름.json out/epNN` → 01~08.jpg (1080x1350).
 - 8장을 축소 합본으로 만들어 직접 보고 글자 넘침, 지도 경계 잘림, 핀 위치를 확인하고 고친다.
 
+## 릴스 영상 (음악)
+사용자가 2026-11-09 에 노래를 같이 올리자고 해서, 게시는 사진 캐러셀이 아니라 릴스로 한다. 8장을 렌더링한 뒤
+`python3 slideshow.py out/epNN out/epNN_reel.mp4 <시드 숫자>` 로 1080x1920 슬라이드 영상(약 27초)에 bgm.py 오리지널 배경음악을 입힌다. 시드는 매일 다르게(EP 번호 등) 해서 음악이 매번 조금씩 달라지게 한다. 유행곡·기존 노래는 저작권 때문에 넣지 않는다.
+
 ## 캡션
 `tools/episodes/ep01_gongdeok_caption.txt` 형식. 해시태그 8개: #동네이름 #구/시 #동네성적표 #입지분석 + 그 동네에 맞는 4개(편마다 다르게). 끝에 "※ 공개 자료 기반 정보 제공 목적이며 투자 권유가 아닙니다." 와 "※ 지도 © OpenStreetMap contributors" 를 넣는다. 2,200자 이하.
 
 ## 대기열
-- `townreport/queue/<YYYY-MM-DD>/01.jpg ~ 08.jpg`, `caption.txt`, `meta.json` ({"ep":N,"adm_nm":"...","title":"...","posted":false,"media_id":null}).
+- `townreport/queue/<YYYY-MM-DD>/01.jpg ~ 08.jpg`, `reel.mp4`, `caption.txt`, `meta.json` ({"ep":N,"adm_nm":"...","title":"...","posted":false,"media_id":null}).
 - 에피소드 json 과 캡션을 `townreport/tools/episodes/` 에도 보관하고, used.txt 에 `EP.NN <adm_nm> <날짜>` 를 추가한다.
 - 7일보다 오래된 queue 날짜 폴더는 git rm 한다. 저장소의 다른 폴더(videos/ 등 미스테리툰 파일)는 건드리지 않는다.
