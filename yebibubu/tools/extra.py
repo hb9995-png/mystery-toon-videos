@@ -68,3 +68,49 @@ def vs_badge(x, y, r=78):
 
 def page_bg(col=BG):
     return f'<rect width="1080" height="1350" fill="{col}"/>'
+
+
+def fridge(x, y, w=260, h=460, col='#E8EEF3'):
+    """양문형 냉장고."""
+    return (f'<g stroke="{INK}" stroke-width="5" stroke-linejoin="round"><rect x="{x}" y="{y}" width="{w}" height="{h}" rx="22" fill="{col}"/>'
+            f'<path d="M{x + w / 2} {y + 10} V {y + h - 10}" /><rect x="{x + w / 2 - 26}" y="{y + h * .3}" width="10" height="{h * .25}" rx="5" fill="#B9C3CC"/>'
+            f'<rect x="{x + w / 2 + 16}" y="{y + h * .3}" width="10" height="{h * .25}" rx="5" fill="#B9C3CC"/></g>')
+
+
+def washer(x, y, w=240, col='#F3F5F7'):
+    """드럼 세탁기."""
+    return (f'<g stroke="{INK}" stroke-width="5"><rect x="{x}" y="{y}" width="{w}" height="{w * 1.15}" rx="20" fill="{col}"/>'
+            f'<path d="M{x} {y + w * .22} H {x + w}"/><circle cx="{x + w / 2}" cy="{y + w * .7}" r="{w * .3}" fill="#BFE3F5"/>'
+            f'<circle cx="{x + w * .8}" cy="{y + w * .11}" r="{w * .05}" fill="{ROSE}"/></g>')
+
+
+def tape(x, y, length=420):
+    """줄자: (x, y) 에 몸통, 오른쪽으로 길이만큼 테이프."""
+    s = f'<g stroke="{INK}" stroke-width="5"><rect x="{x}" y="{y - 14}" width="{length}" height="28" fill="#FFD84D"/>'
+    for i in range(1, int(length / 30)):
+        s += f'<path d="M{x + i * 30} {y - 14} v {14 if i % 2 else 22}" stroke-width="3"/>'
+    return s + f'<rect x="{x - 90}" y="{y - 60}" width="110" height="120" rx="26" fill="{ROSE}"/><circle cx="{x - 35}" cy="{y}" r="22" fill="#fff"/></g>'
+
+
+def calendar(x, y, w=300, mark=(), title=''):
+    """달력 한 장. mark: 동그라미 칠 칸 번호(0~27)."""
+    s = f'<g stroke="{INK}" stroke-width="5"><rect x="{x}" y="{y}" width="{w}" height="{w}" rx="18" fill="#fff"/><path d="M{x} {y + w * .22} H {x + w}"/>'
+    s += f'<rect x="{x}" y="{y}" width="{w}" height="{w * .22}" rx="18" fill="{ROSE}"/></g>' + T(x + w / 2, y + w * .16, title, w * .12, 'j', '#fff')
+    cw = w / 7
+    for i in range(28):
+        cx = x + cw * (i % 7) + cw / 2; cy = y + w * .22 + cw * .7 + (i // 7) * cw * .95
+        s += f'<circle cx="{cx}" cy="{cy}" r="{cw * .12}" fill="#D9CCCC"/>'
+        if i in mark: s += f'<circle cx="{cx}" cy="{cy}" r="{cw * .38}" fill="none" stroke="{ROSE}" stroke-width="5"/>'
+    return s
+
+
+def box(x, y, w=200, h=150, label=''):
+    """택배 상자."""
+    return (f'<g stroke="{INK}" stroke-width="5" stroke-linejoin="round"><rect x="{x}" y="{y}" width="{w}" height="{h}" fill="#D9A86C"/>'
+            f'<path d="M{x + w / 2 - 20} {y} v {h * .35} h 40 v {-h * .35}" fill="#C8955A"/></g>' + (T(x + w / 2, y + h * .78, label, h * .2, 'j', '#6A4A2A') if label else ''))
+
+
+def door(x, y, w=230, h=520):
+    """현관문."""
+    return (f'<g stroke="{INK}" stroke-width="6"><rect x="{x - 20}" y="{y - 20}" width="{w + 40}" height="{h + 20}" fill="#C7A47A"/>'
+            f'<rect x="{x}" y="{y}" width="{w}" height="{h}" fill="#8C6A4E"/><circle cx="{x + w - 30}" cy="{y + h * .55}" r="12" fill="#FFD36A"/></g>')
