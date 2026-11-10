@@ -10,6 +10,7 @@
 - 같은 날 두 편은 상황(받는 사람)과 분위기(웃김/설렘)를 다르게. used.txt 와 겹치는 설정 금지.
 
 ## 만들기
+- 디자인은 C안(2026-11-10 사용자 선택): 밝은 미니멀 배경, 위 검은 훅 카드(2줄째 빨강), 파란 내 말풍선·회색 상대 말풍선, 읽음 표시. 편마다 핵심 실수 톡 1개에 `"hl":true` 를 달아 빨강으로 강조한다. 디자인은 tools/chat.py 가 처리하니 바꾸지 않는다.
 - `tools/episodes/epNN_<영문슬러그>.json` 작성 (형식은 tools/chat.py 맨 위 설명). seed 는 EP 번호 × 101.
 - `python3 tools/chat.py tools/episodes/epNN_x.json out.mp4` (1080x1920 H.264+AAC). /tmp/hook_<ep>/ 의 PNG 를 직접 열어 글자 잘림·겹침을 확인한다.
 - 캡션 `tools/episodes/epNN_x_caption.txt`: 2줄 요약(결말 스포 금지) + 참여 유도 질문 + "※ 창작 썰입니다" + 해시태그 6개(#톡잘못보냄 고정, 나머지 편마다 다르게). 실화라고 쓰지 않는다.

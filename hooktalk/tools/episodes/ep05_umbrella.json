@@ -2,7 +2,7 @@
 "msgs":[
 {"who":"sys","text":"오후 10:31"},
 {"who":"me","text":"야 나 진짜 큰일났다"},
-{"who":"me","text":"윤서 좋아하는 것 같아"},
+{"who":"me","text":"윤서 좋아하는 것 같아","hl":true},
 {"who":"me","text":"오늘 우산 씌워줬는데\n심장 터지는 줄"},
 {"who":"them","text":"그 윤서가 나야?"},
 {"who":"me","text":"아"},
