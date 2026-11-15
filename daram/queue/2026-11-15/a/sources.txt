@@ -1,0 +1,2 @@
+커리어넷(한국직업능력연구원 진로정보망) 진로심리검사: https://www.career.go.kr/cnet/front/openapi/openApiv2TestCenter.do
+그 밖의 내용(관심사 기록, 분야 탐색, 체험활동, 진로 변화)은 숫자·법 없는 일반 진로 조언
