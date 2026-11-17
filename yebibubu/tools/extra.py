@@ -114,3 +114,17 @@ def door(x, y, w=230, h=520):
     """현관문."""
     return (f'<g stroke="{INK}" stroke-width="6"><rect x="{x - 20}" y="{y - 20}" width="{w + 40}" height="{h + 20}" fill="#C7A47A"/>'
             f'<rect x="{x}" y="{y}" width="{w}" height="{h}" fill="#8C6A4E"/><circle cx="{x + w - 30}" cy="{y + h * .55}" r="12" fill="#FFD36A"/></g>')
+
+
+def mic(x, y, s=1.0):
+    """손 마이크. (x, y) 가 머리 중심."""
+    return (f'<g transform="translate({x} {y}) scale({s}) rotate(-20)" stroke="{INK}" stroke-width="5">'
+            f'<rect x="-14" y="20" width="28" height="120" rx="12" fill="#3A3542"/>'
+            f'<circle cx="0" cy="0" r="34" fill="#C9CED6"/><path d="M-24 -10 H 24 M -28 6 H 28" stroke-width="3"/></g>')
+
+
+def note(x, y, s=1.0, col='#E06C7A'):
+    """음표 하나."""
+    return (f'<g transform="translate({x} {y}) scale({s})" stroke="{INK}" stroke-width="4">'
+            f'<ellipse cx="0" cy="0" rx="22" ry="16" fill="{col}" transform="rotate(-20)"/>'
+            f'<path d="M18 -6 V -80 q 26 10 30 36" fill="none" stroke-width="6"/></g>')
