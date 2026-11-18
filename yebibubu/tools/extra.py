@@ -128,3 +128,59 @@ def note(x, y, s=1.0, col='#E06C7A'):
     return (f'<g transform="translate({x} {y}) scale({s})" stroke="{INK}" stroke-width="4">'
             f'<ellipse cx="0" cy="0" rx="22" ry="16" fill="{col}" transform="rotate(-20)"/>'
             f'<path d="M18 -6 V -80 q 26 10 30 36" fill="none" stroke-width="6"/></g>')
+
+
+def curtain(x, y, w=420, h=640, opened=False, col='#F4C6D0'):
+    """피팅룸 커튼. opened=True 면 양옆으로 젖혀진 모양."""
+    s = f'<g stroke="{INK}" stroke-width="5" stroke-linejoin="round"><rect x="{x - 20}" y="{y - 24}" width="{w + 40}" height="24" rx="10" fill="#C9A26A"/>'
+    if opened:
+        for sx, d in ((x, 1), (x + w, -1)):
+            s += f'<path d="M{sx} {y} q {d * 90} {h * .45} {d * 30} {h} h {d * 60} q {d * 10} {-h * .6} {d * 50} {-h} z" fill="{col}"/>'
+    else:
+        n = 6; cw = w / n
+        for i in range(n):
+            s += f'<path d="M{x + i * cw} {y} q {cw * .5} {h * .5} 0 {h} h {cw} q {-cw * .5} {-h * .5} 0 {-h} z" fill="{col}"/>'
+    return s + '</g>'
+
+
+def mirror(x, y, w=260, h=520):
+    """전신 거울."""
+    return (f'<g stroke="{INK}" stroke-width="6"><rect x="{x}" y="{y}" width="{w}" height="{h}" rx="{w / 2}" fill="#E7C98A"/>'
+            f'<rect x="{x + 18}" y="{y + 18}" width="{w - 36}" height="{h - 36}" rx="{w / 2 - 18}" fill="#DDEFF7"/></g>'
+            f'<path d="M{x + w * .3} {y + h * .2} l {w * .25} {-w * .12} M {x + w * .3} {y + h * .3} l {w * .35} {-w * .17}" stroke="#fff" stroke-width="8" stroke-linecap="round"/>')
+
+
+def dress_rack(x, y, w=520, n=5):
+    """드레스 걸린 행거."""
+    s = f'<g stroke="{INK}" stroke-width="5" stroke-linejoin="round"><path d="M{x} {y} H {x + w}" stroke-width="8"/>'
+    s += f'<path d="M{x + 10} {y} V {y + 420} M {x + w - 10} {y} V {y + 420}" stroke-width="7"/>'
+    gap = (w - 60) / max(1, n - 1)
+    for i in range(n):
+        cx = x + 30 + i * gap
+        s += f'<path d="M{cx} {y} v 18"/><path d="M{cx - 22} {y + 20} h 44 l 34 260 h -112 z" fill="#FFFFFF"/>'
+        s += f'<path d="M{cx - 22} {y + 70} h 44" stroke="#E7D7DA" stroke-width="4"/>'
+    return s + '</g>'
+
+
+def sofa(x, y, w=520, col='#B7C4D9'):
+    """2인용 소파. (x, y) 는 등받이 왼쪽 위."""
+    return (f'<g stroke="{INK}" stroke-width="6" stroke-linejoin="round"><rect x="{x}" y="{y}" width="{w}" height="170" rx="40" fill="{col}"/>'
+            f'<rect x="{x - 30}" y="{y + 90}" width="{w + 60}" height="140" rx="40" fill="{col}"/>'
+            f'<rect x="{x + 30}" y="{y + 110}" width="{w / 2 - 40}" height="70" rx="24" fill="#fff" fill-opacity=".35"/>'
+            f'<rect x="{x + w / 2 + 10}" y="{y + 110}" width="{w / 2 - 40}" height="70" rx="24" fill="#fff" fill-opacity=".35"/>'
+            f'<rect x="{x}" y="{y + 230}" width="26" height="40" fill="#8C6A4E"/><rect x="{x + w - 26}" y="{y + 230}" width="26" height="40" fill="#8C6A4E"/></g>')
+
+
+def plant(x, y, s=1.0):
+    """화분. (x, y) 는 화분 아래 가운데."""
+    return (f'<g transform="translate({x} {y}) scale({s})" stroke="{INK}" stroke-width="5" stroke-linejoin="round">'
+            f'<path d="M0 -120 q -70 -40 -60 -130 q 50 30 60 130 z M0 -120 q 70 -50 70 -150 q -60 20 -70 150 z M0 -120 q -10 -80 10 -170 q 30 80 -10 170 z" fill="#7FC58F"/>'
+            f'<path d="M-60 -120 h 120 l -20 120 h -80 z" fill="#E59A6B"/></g>')
+
+
+def lamp(x, y, warm=True):
+    """천장 펜던트 조명. (x, y) 는 갓 위 가운데."""
+    glow = '#FFE6A3' if warm else '#F4FAFF'
+    return (f'<circle cx="{x}" cy="{y + 110}" r="170" fill="{glow}" fill-opacity=".55"/>'
+            f'<g stroke="{INK}" stroke-width="5"><path d="M{x} {y - 200} V {y}"/><path d="M{x - 80} {y + 80} L {x - 30} {y} H {x + 30} L {x + 80} {y + 80} Z" fill="{"#F5B860" if warm else "#DCE6F2"}"/>'
+            f'<circle cx="{x}" cy="{y + 92}" r="18" fill="{glow}"/></g>')
