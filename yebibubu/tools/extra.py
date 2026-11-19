@@ -184,3 +184,21 @@ def lamp(x, y, warm=True):
     return (f'<circle cx="{x}" cy="{y + 110}" r="170" fill="{glow}" fill-opacity=".55"/>'
             f'<g stroke="{INK}" stroke-width="5"><path d="M{x} {y - 200} V {y}"/><path d="M{x - 80} {y + 80} L {x - 30} {y} H {x + 30} L {x + 80} {y + 80} Z" fill="{"#F5B860" if warm else "#DCE6F2"}"/>'
             f'<circle cx="{x}" cy="{y + 92}" r="18" fill="{glow}"/></g>')
+
+
+def camera(x, y, s=1.0, tripod=True):
+    """삼각대 위 카메라. (x, y) 는 카메라 몸체 가운데."""
+    t = ''
+    if tripod:
+        t = (f'<path d="M0 60 L -90 380 M0 60 L 90 380 M0 60 L 0 380" stroke-width="8" fill="none"/>')
+    return (f'<g transform="translate({x} {y}) scale({s})" stroke="{INK}" stroke-width="5" stroke-linejoin="round">' + t +
+            f'<rect x="-110" y="-70" width="220" height="140" rx="22" fill="#4A4652"/>'
+            f'<rect x="-60" y="-96" width="70" height="30" rx="8" fill="#4A4652"/>'
+            f'<circle cx="0" cy="0" r="52" fill="#2E2B35"/><circle cx="0" cy="0" r="32" fill="#7FA9D9"/>'
+            f'<circle cx="-10" cy="-10" r="9" fill="#fff" stroke="none"/><circle cx="78" cy="-44" r="10" fill="#FFD36A"/></g>')
+
+
+def frame(x, y, w=260, h=200, inner='', col='#C99A6B'):
+    """벽 액자. inner 는 액자 안 그림."""
+    return (f'<rect x="{x}" y="{y}" width="{w}" height="{h}" fill="{col}" stroke="{INK}" stroke-width="6"/>'
+            f'<rect x="{x + 18}" y="{y + 18}" width="{w - 36}" height="{h - 36}" fill="#FFF8EE" stroke="{INK}" stroke-width="3"/>' + inner)
