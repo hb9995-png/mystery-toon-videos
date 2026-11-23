@@ -21,3 +21,8 @@
 - `lawbless/queue/<YYYY-MM-DD>/a/`, `/b/` 에 reel.mp4, caption.txt, meta.json({"ep":N,"title":"...","posted":false,"media_id":null}), sources.txt(연 자료 링크).
 - EP 번호는 used.txt 가장 큰 번호 다음부터. used.txt 에 `EP.NN 주제(근거) 날짜` 추가.
 - 7일보다 오래된 queue 날짜 폴더는 git rm. lawbless/ 밖은 건드리지 않는다.
+
+## 사연 → 판결 형식 (2026-11-23 사용자 결정, EP.32~)
+- 정보 카드뉴스 대신 사연 → 판결. episode.json 에 "pages"(chat/question/verdict/todo/cta)를 쓰면 cards.py 가 이 형식으로 그린다(형식은 cards.py 맨 위).
+- 첫 장 = 상대가 한 말을 그대로 보여 주는 대화 장면 + 15자 안팎 큰 글씨 한 줄. 2~3장 전개, "이거 법적으로 누가 이길까?", 판결(확인된 조문·판례만), 할 일 1~3개, cta.
+- 영상 25~40초, 첫 장 2.8초 이상, 글 많은 장 3~5초. 캡션 첫 줄 사연, 둘째 줄 검색 키워드, 댓글 유도 한 줄, "※ 이해를 돕기 위한 가상 사례입니다." 유지.
