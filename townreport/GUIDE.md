@@ -4,7 +4,7 @@
 
 ## 준비
 1. 이 저장소의 `townreport/tools/*` 를 `/home/claude/dongne/` 에 복사하고 `mkdir -p /home/claude/dongne/{data,build,out,episodes}`.
-2. 행정동 경계: `curl -sSL -o /home/claude/dongne/data/dong.json https://raw.githubusercontent.com/vuski/admdongkor/master/ver20230701/HangJeongDong_ver20230701.geojson` (약 35MB).
+2. 행정동 경계: `curl -sSL -o /home/claude/dongne/data/dong.json https://raw.githubusercontent.com/vuski/admdongkor/master/ver20230701/HangJeongDong_ver20230701.geojson` (약 35MB). 새 동(옥정2동 등)이 없으면 `ver20250701` 판을 data/dong2025.json 으로 받고 `DONG_JSON=/home/claude/dongne/data/dong2025.json` 을 붙여 렌더링한다.
 3. 한글 폰트는 `/usr/share/fonts/opentype/noto/NotoSansCJK-*.ttc` (없으면 `apt-get install -y fonts-noto-cjk`). Python 패키지: Pillow, numpy.
 4. 지도는 OpenStreetMap 타일(tile.openstreetmap.org)을 basemap.py 가 받아 캐시한다. 역 좌표는 `python3 geocode.py 역이름` (Nominatim). 결과의 display_name 에 해당 동/구가 들어 있는지 확인한다.
 
@@ -43,3 +43,10 @@
 - EP 번호는 used.txt 줄 수 + 1 부터 차례로(a 가 먼저). EP 번호는 used.txt 의 가장 큰 번호 다음으로 한다.
 - 에피소드 json 과 캡션을 `townreport/tools/episodes/` 에도 보관하고, used.txt 에 `EP.NN <adm_nm> <날짜>` 를 추가한다.
 - 7일보다 오래된 queue 날짜 폴더는 git rm 한다. 저장소의 다른 폴더(videos/ 등 미스테리툰 파일)는 건드리지 않는다.
+
+## 랭킹·비교형 (사용자가 2026-11-23 에 바꾸기로 함)
+첫 3초 이탈이 커서 '동네 하나 성적표' 대신 a=랭킹형(TOP5), b=비교(VS)형으로 만든다. 첫 장은 질문 한 줄 큰 글씨(EP 번호·계정명 없음).
+- 에피소드 json 에 "type":"rank" 또는 "vs". 예: tools/episodes/ep33_kids_top5.json, ep34_sangam_vs_magok.json. carousel.py 가 type 을 보고 그린다(랭킹: 질문→기준→5위..1위→요약, 비교: 질문→두 지도→라운드별 승패→최종 스코어→결론).
+- 순위·비교 기준은 실제로 확인한 자료로 정하고 화면에 적는다. 확인 못 한 항목은 뺀다.
+- used.txt 는 한 편에 한 줄: 첫 동네가 1위·주인공(구/시 반복 금지 판단 기준), 뒤에 '함께:' 로 나머지 동네.
+- 캡션 첫 줄은 그 편 질문, 둘째 줄 검색 키워드, 셋째 줄 댓글 유도. "📝 동네성적표 EP.xx | …" 줄은 그 뒤.

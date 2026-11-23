@@ -12,7 +12,7 @@ def get_tile(z,x,y,cache):
         open(p,'wb').write(urllib.request.urlopen(req,timeout=30).read()); time.sleep(0.2)
     return Image.open(p).convert('RGB')
 def build(adm_nm, out_prefix, W=1080, H=1240, pad=0.06):
-    d=json.load(open('/home/claude/dongne/data/dong.json'))
+    d=json.load(open(os.environ.get('DONG_JSON','/home/claude/dongne/data/dong.json')))
     f=[f for f in d['features'] if f['properties']['adm_nm']==adm_nm][0]
     g=f['geometry']; polys=g['coordinates'] if g['type']=='MultiPolygon' else [g['coordinates']]
     pts=[p for poly in polys for ring in poly for p in ring]
