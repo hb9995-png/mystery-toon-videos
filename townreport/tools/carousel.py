@@ -215,7 +215,7 @@ def vs_intro(sp, n):
         m = {'ep': sp['ep'], 'adm_nm': side['adm_nm'], 'mapkey': side['key'], 'pins': side.get('pins', [])}
         mp = rounded(map_img(m, 468, 760), 28); im.alpha_composite(mp, (x0, 330)); d = ImageDraw.Draw(im)
         col = side['color']
-        text_c(d, x0 + 234, 130, side['name'], fit(d, side['name'], FB, 110, 460), col)
+        text_c(d, x0 + 234 + (-40 if k == 0 else 40), 130, side['name'], fit(d, side['name'], FB, 110, 360), col)
         text_c(d, x0 + 234, 265, side['area'], fit(d, side['area'], FBo, 34, 460), MUTED)
         for j, ln in enumerate(side['intro']):
             text_c(d, x0 + 234, 1110 + j * 56, ln, fit(d, ln, FBo, 38, 460), INK)
@@ -260,7 +260,7 @@ def vs_score(sp, n):
         tw = d.textlength(res, font=F(FB, 48)); d.text((984 - tw, y - 2), res, font=F(FB, 48), fill=col)
     d = ImageDraw.Draw(im)
     win = A if wa > wb else B if wb > wa else None
-    im.alpha_composite(stamp(win['name'][:2] if win else '무', 230), (W // 2 - 115, 470))
+    im.alpha_composite(stamp(win.get('stamp', win['name'][:2]) if win else '무', 230), (W // 2 - 115, 470))
     return im
 
 def vs_end(sp, n):

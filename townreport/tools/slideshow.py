@@ -7,7 +7,8 @@ PAPER = (250, 246, 238)
 for i, p in enumerate(imgs):
     c = Image.new('RGB', (1080, 1920), PAPER); im = Image.open(p).convert('RGB')
     c.paste(im, (0, (1920 - 1350) // 2)); c.save(f'{tmp}/{i:02d}.png')
-durs = [3.0] + [3.2] * (len(imgs) - 2) + [4.0]; total = sum(durs)
+mid = max(3.2, min(4.0, (26.0 - 7.0) / max(1, len(imgs) - 2)))  # 전체 25~35초 유지
+durs = [3.0] + [round(mid, 2)] * (len(imgs) - 2) + [4.0]; total = sum(durs)
 subprocess.run(['python3', 'bgm.py', f'{tmp}/bgm.wav', str(total + 1), seed], check=True)
 lst = ''.join(f"file '{os.path.abspath(tmp)}/{i:02d}.png'\nduration {d}\n" for i, d in enumerate(durs)) + f"file '{os.path.abspath(tmp)}/{len(imgs)-1:02d}.png'\n"
 open(f'{tmp}/list.txt', 'w').write(lst)
