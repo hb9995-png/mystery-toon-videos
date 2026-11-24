@@ -202,3 +202,46 @@ def frame(x, y, w=260, h=200, inner='', col='#C99A6B'):
     """벽 액자. inner 는 액자 안 그림."""
     return (f'<rect x="{x}" y="{y}" width="{w}" height="{h}" fill="{col}" stroke="{INK}" stroke-width="6"/>'
             f'<rect x="{x + 18}" y="{y + 18}" width="{w - 36}" height="{h - 36}" fill="#FFF8EE" stroke="{INK}" stroke-width="3"/>' + inner)
+
+
+def friend(kind, x, y, s=1.0, mood='happy', arms=(8, -8), flip=False):
+    """신부 친구들(조연). kind: 'f1' 크림 푸들·민트 니트, 'f2' 회색 푸들·노란 티. char() 와 같은 좌표계."""
+    if kind == 'f1':
+        h = poodle_head(mood, col='#F4E3C3', ear='#E2C99C')
+        b = body(180, 160, '#9ED9C6', None, legcol='#7FBFAB', arm_l=arms[0], arm_r=arms[1], paw='#F4E3C3',
+                 over=f'<path d="M-50 2 Q 0 40 50 2" fill="none" stroke-width="4"/>')
+    else:
+        h = poodle_head(mood, col='#A7A3AE', ear='#8A8592')
+        b = body(180, 160, '#FFD86A', None, legcol='#E9BE4A', arm_l=arms[0], arm_r=arms[1], paw='#A7A3AE',
+                 over=f'<circle cx="0" cy="80" r="22" fill="#FF9FB0" stroke-width="3"/>')
+    fx = -s if flip else s
+    return (f'<g transform="translate({x} {y}) scale({fx} {s})">'
+            f'<g transform="translate(0 105)">{b}</g><g transform="scale(1.2)">{h}</g></g>')
+
+
+def invite_card(x, y, w=300, rot=0):
+    """청첩장 한 장: 봉투 위 카드 (x, y 는 왼쪽 위)."""
+    h = w * .7
+    return (f'<g transform="rotate({rot} {x + w / 2} {y + h / 2})" stroke="{INK}" stroke-width="5" stroke-linejoin="round">'
+            f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="12" fill="#FFF8F0"/>'
+            f'<path d="M{x} {y} L {x + w / 2} {y + h * .55} L {x + w} {y}" fill="#F6E3E6"/>'
+            f'<circle cx="{x + w / 2}" cy="{y + h * .55}" r="{w * .07}" fill="{ROSE}"/></g>')
+
+
+def cafe_table(y=880, x0=110, x1=970):
+    """식당 긴 탁자 + 접시·컵."""
+    s = (f'<g stroke="{INK}" stroke-width="5" stroke-linejoin="round">'
+         f'<rect x="{x0}" y="{y}" width="{x1 - x0}" height="56" rx="18" fill="#E9C9A4"/>'
+         f'<rect x="{x0 + 50}" y="{y + 56}" width="28" height="120" fill="#C9A07A"/><rect x="{x1 - 78}" y="{y + 56}" width="28" height="120" fill="#C9A07A"/>')
+    for cx in range(x0 + 120, x1 - 60, 230):
+        s += f'<ellipse cx="{cx}" cy="{y + 6}" rx="70" ry="18" fill="#fff"/>'
+        s += f'<rect x="{cx + 80}" y="{y - 56}" width="40" height="58" rx="8" fill="#CDEBF7"/>'
+    return s + '</g>'
+
+
+def memo_card(x, y, w=260, h=180, lines=(), rot=-4):
+    """작은 메모 쪽지(줄글)."""
+    s = f'<g transform="rotate({rot} {x + w / 2} {y + h / 2})"><rect x="{x}" y="{y}" width="{w}" height="{h}" rx="10" fill="#FFF7B8" stroke="{INK}" stroke-width="5"/>'
+    for i, t in enumerate(lines):
+        s += T(x + 24, y + 54 + i * 46, t, 36, 'g', INK, 'start')
+    return s + '</g>'
