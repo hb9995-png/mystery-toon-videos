@@ -245,3 +245,45 @@ def memo_card(x, y, w=260, h=180, lines=(), rot=-4):
     for i, t in enumerate(lines):
         s += T(x + 24, y + 54 + i * 46, t, 36, 'g', INK, 'start')
     return s + '</g>'
+
+
+def cart(x, y, s=1.0, full=True):
+    """장보기 카트. (x, y) 는 바구니 왼쪽 위. full=True 면 물건이 쌓여 있다."""
+    w, h = 360 * s, 220 * s
+    st = ''
+    if full:
+        cols = ['#F08A6A', '#9CCB7E', '#F2C66B', '#96B4EE', '#C59BE6', '#FFB3C1']
+        for i in range(6):
+            bx = x + 20 * s + (i % 3) * 110 * s; by = y - 70 * s - (i // 3) * 80 * s
+            st += f'<rect x="{bx}" y="{by}" width="{100 * s}" height="{90 * s}" rx="{10 * s}" fill="{cols[i]}" stroke="{INK}" stroke-width="4"/>'
+    return (st + f'<g stroke="{INK}" stroke-width="5" stroke-linejoin="round" fill="none">'
+            f'<path d="M{x} {y} H {x + w} L {x + w - 30 * s} {y + h} H {x + 30 * s} Z" fill="#DDE6EE"/>'
+            + ''.join(f'<path d="M{x + w * k / 5} {y} L {x + 30 * s + (w - 60 * s) * k / 5} {y + h}" stroke-width="3"/>' for k in range(1, 5))
+            + f'<path d="M{x + w} {y} l {50 * s} {-60 * s} h {40 * s}" stroke-width="8"/>'
+            f'<path d="M{x + 40 * s} {y + h} V {y + h + 60 * s} H {x + w - 40 * s} V {y + h}" stroke-width="6"/></g>'
+            f'<circle cx="{x + 60 * s}" cy="{y + h + 80 * s}" r="{20 * s}" fill="#3A3542"/><circle cx="{x + w - 60 * s}" cy="{y + h + 80 * s}" r="{20 * s}" fill="#3A3542"/>')
+
+
+def towels(x, y, cols=('#FFB3C1', '#96B4EE', '#9CCB7E', '#F2C66B', '#C59BE6'), w=240):
+    """개어 놓은 수건 더미. (x, y) 는 맨 아래 수건 왼쪽 아래."""
+    s = ''
+    for i, c in enumerate(cols):
+        yy = y - (i + 1) * 54
+        s += f'<rect x="{x + (i % 2) * 10}" y="{yy}" width="{w}" height="54" rx="20" fill="{c}" stroke="{INK}" stroke-width="4"/>'
+    return s
+
+
+def pan(x, y, s=1.0, rot=0):
+    """프라이팬. (x, y) 는 팬 가운데."""
+    return (f'<g transform="translate({x} {y}) rotate({rot}) scale({s})" stroke="{INK}" stroke-width="5">'
+            f'<rect x="80" y="-14" width="170" height="28" rx="14" fill="#6B4A3A"/>'
+            f'<circle cx="0" cy="0" r="95" fill="#4A4552"/><circle cx="0" cy="0" r="70" fill="#5E5868" stroke-width="3"/></g>')
+
+
+def receipt(x, y, w=200, h=600):
+    """길게 늘어진 영수증. (x, y) 는 위 가운데."""
+    s = f'<path d="M{x - w / 2} {y} H {x + w / 2} V {y + h} ' + ''.join(f'l {-w / 10} 20 l {-w / 10} -20 ' for _ in range(5)) + f'Z" fill="#fff" stroke="{INK}" stroke-width="5"/>'
+    for i in range(int((h - 60) / 46)):
+        yy = y + 50 + i * 46
+        s += f'<path d="M{x - w / 2 + 24} {yy} h {w * .45}" stroke="#C9BDBD" stroke-width="6" stroke-linecap="round"/><path d="M{x + w / 2 - 24} {yy} h {-w * .2}" stroke="#C9BDBD" stroke-width="6" stroke-linecap="round"/>'
+    return s
