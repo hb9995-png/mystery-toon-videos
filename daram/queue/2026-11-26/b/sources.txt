@@ -1,0 +1,5 @@
+대한민국 정책브리핑 「모든 대학 정보를 한 곳에, '대학알리미' 활용하기」(2024.09.25) https://www.korea.kr/news/policyNewsView.do?newsId=148933777
+ - 대학알리미(academyinfo.go.kr)는 한국대학교육협의회 운영, "'학과정보'에서는 키워드별 학과정보나 표준분류체계에 따른 학과 정보를 확인", 개설 대학 목록·취업률·졸업생 진학/취업 현황
+커리어넷 대학교 학과정보 https://www.career.go.kr/cnet/front/base/major/FunivMajorView.do?SEQ=46
+ - 계열별 학과 소개, 학과 요약, 취업률, 진학률 표시 (한국직업능력연구원 운영, 교육부 지원)
+배우는 과목·졸업 후 진로·전공 체험은 일반 진로 상식.
