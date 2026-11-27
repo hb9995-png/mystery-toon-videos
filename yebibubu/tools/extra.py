@@ -287,3 +287,49 @@ def receipt(x, y, w=200, h=600):
         yy = y + 50 + i * 46
         s += f'<path d="M{x - w / 2 + 24} {yy} h {w * .45}" stroke="#C9BDBD" stroke-width="6" stroke-linecap="round"/><path d="M{x + w / 2 - 24} {yy} h {-w * .2}" stroke="#C9BDBD" stroke-width="6" stroke-linecap="round"/>'
     return s
+
+
+def lake(y=760, col='#9CCBE8'):
+    """호수 물결 배경. y 는 수면."""
+    s = f'<rect x="70" y="{y}" width="940" height="600" fill="{col}"/>'
+    for i in range(5):
+        yy = y + 50 + i * 70
+        for k in range(4):
+            xx = 120 + k * 240 + (i % 2) * 110
+            s += f'<path d="M{xx} {yy} q 30 -18 60 0 t 60 0" fill="none" stroke="#fff" stroke-width="5" opacity=".7"/>'
+    return s
+
+
+def dock(x0, x1, y):
+    """나무 선착장(물가 데크)."""
+    s = f'<g stroke="{INK}" stroke-width="5"><rect x="{x0}" y="{y}" width="{x1 - x0}" height="60" fill="#C9A07A"/>'
+    for xx in range(int(x0) + 80, int(x1), 160):
+        s += f'<rect x="{xx}" y="{y + 60}" width="26" height="200" fill="#A9825E"/>'
+    return s + '</g>'
+
+
+def rod(x, y, dx=300, dy=-260, line=380):
+    """낚싯대: (x, y) 손잡이에서 (x+dx, y+dy) 끝, 거기서 줄이 line 만큼 아래로."""
+    ex, ey = x + dx, y + dy
+    return (f'<path d="M{x} {y} L {ex} {ey}" stroke="#6A4A2A" stroke-width="9" stroke-linecap="round"/>'
+            f'<path d="M{ex} {ey} V {ey + line}" stroke="#555" stroke-width="2.5"/>'
+            f'<circle cx="{ex}" cy="{ey + line}" r="12" fill="{ROSE}" stroke="{INK}" stroke-width="3"/>')
+
+
+def fish(x, y, s=1.0, col='#F2A65A', rot=0):
+    """물고기 한 마리. (x, y) 가운데."""
+    return (f'<g transform="translate({x} {y}) rotate({rot}) scale({s})" stroke="{INK}" stroke-width="5" stroke-linejoin="round">'
+            f'<path d="M70 0 L 120 -40 L 120 40 Z" fill="{col}"/><ellipse cx="0" cy="0" rx="85" ry="48" fill="{col}"/>'
+            f'<circle cx="-45" cy="-10" r="9" fill="{INK}"/><path d="M-10 -40 q 20 40 0 80" fill="none" stroke-width="3"/></g>')
+
+
+def window(x, y, w=380, h=420, curtain_=False, sun=True):
+    """창문. 햇빛 들어오는 창 (커튼 없이)."""
+    s = ''
+    if sun:
+        s += f'<path d="M{x} {y + h} L {x - 120} {y + h + 500} L {x + w + 260} {y + h + 500} L {x + w} {y + h} Z" fill="#FFF2B8" opacity=".55"/>'
+    s += (f'<rect x="{x}" y="{y}" width="{w}" height="{h}" fill="#CFE9FF" stroke="{INK}" stroke-width="6"/>'
+          f'<path d="M{x + w / 2} {y} V {y + h} M {x} {y + h / 2} H {x + w}" stroke="{INK}" stroke-width="5"/>')
+    if sun:
+        s += f'<circle cx="{x + w * .72}" cy="{y + h * .28}" r="48" fill="#FFD36A" stroke="{INK}" stroke-width="4"/>'
+    return s
