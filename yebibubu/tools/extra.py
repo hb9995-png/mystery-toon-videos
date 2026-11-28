@@ -333,3 +333,45 @@ def window(x, y, w=380, h=420, curtain_=False, sun=True):
     if sun:
         s += f'<circle cx="{x + w * .72}" cy="{y + h * .28}" r="48" fill="#FFD36A" stroke="{INK}" stroke-width="4"/>'
     return s
+
+
+def ring(x, y, s=1.0, gem=True, rot=0):
+    """반지 한 개. (x, y) 가운데."""
+    out = (f'<g transform="translate({x} {y}) rotate({rot}) scale({s})" stroke="{INK}" stroke-width="5" stroke-linejoin="round">'
+           f'<ellipse cx="0" cy="0" rx="60" ry="48" fill="none" stroke="#E8C46A" stroke-width="18"/>'
+           f'<ellipse cx="0" cy="0" rx="60" ry="48" fill="none" stroke-width="3"/><ellipse cx="0" cy="0" rx="42" ry="30" fill="none" stroke-width="3"/>')
+    if gem:
+        out += '<path d="M-22 -50 L 0 -78 L 22 -50 L 0 -36 Z" fill="#DDF3FF"/><path d="M-22 -50 H 22" stroke-width="3"/>'
+    return out + '</g>'
+
+
+def ring_box(x, y, s=1.0, rings=True):
+    """뚜껑 열린 반지 상자. (x, y) 는 상자 아래 가운데."""
+    out = (f'<g transform="translate({x} {y}) scale({s})" stroke="{INK}" stroke-width="6" stroke-linejoin="round">'
+           f'<path d="M-130 -150 L -110 -290 H 110 L 130 -150 Z" fill="{ROSE}"/>'
+           f'<rect x="-140" y="-150" width="280" height="150" rx="18" fill="{ROSE}"/>'
+           f'<rect x="-110" y="-140" width="220" height="80" rx="30" fill="#FFF0F3"/></g>')
+    if rings:
+        out += ring(x - 48 * s, y - 120 * s, .55 * s, True) + ring(x + 48 * s, y - 120 * s, .55 * s, False)
+    return out
+
+
+def showcase(y=760, x0=90, x1=990):
+    """보석 진열장: 유리 위에 반지들."""
+    s = (f'<g stroke="{INK}" stroke-width="5" stroke-linejoin="round">'
+         f'<rect x="{x0}" y="{y}" width="{x1 - x0}" height="320" fill="#E9DDF5"/>'
+         f'<rect x="{x0}" y="{y - 140}" width="{x1 - x0}" height="140" fill="#EAF7FF" opacity=".85"/>'
+         f'<path d="M{x0} {y - 140} H {x1}" stroke-width="5"/></g>')
+    for i, cx in enumerate(range(x0 + 90, x1 - 40, 150)):
+        s += ring(cx, y - 60, .5, i % 2 == 0)
+    return s
+
+
+def clerk(x, y, s=1.0, mood='happy', arms=(8, -8), flip=False):
+    """매장 직원(조연): 회갈색 푸들, 남색 조끼 + 이름표."""
+    h = poodle_head(mood, col='#D8C2A8', ear='#BFA283')
+    b = body(180, 160, '#FFFFFF', None, legcol='#4A5578', arm_l=arms[0], arm_r=arms[1], paw='#D8C2A8',
+             over=f'<path d="M-90 20 L -40 160 H 40 L 90 20" fill="#4A5578"/><rect x="34" y="50" width="40" height="24" rx="6" fill="#FFD86A" stroke-width="3"/>')
+    fx = -s if flip else s
+    return (f'<g transform="translate({x} {y}) scale({fx} {s})">'
+            f'<g transform="translate(0 105)">{b}</g><g transform="scale(1.2)">{h}</g></g>')
